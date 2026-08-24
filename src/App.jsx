@@ -251,7 +251,7 @@ function App() {
       </section>
 
       {/* Floating Radial Contact Button */}
-      <div className={`fab-container ${menuOpen ? 'open' : ''}`}>
+      <div className={`fab-container ${menuOpen ? 'open' : ''}`}> 
         <button 
           className={`fab-main ${menuOpen ? 'active' : ''}`} 
           onClick={() => setMenuOpen(!menuOpen)}
