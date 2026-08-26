@@ -216,20 +216,29 @@ function App() {
 		  </p>
 		  
 		  <div className="button-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
-			{/* Offering Button positioned above View Projects */}
 			<button 
 			  className="badge-btn" 
 			  onClick={() => scrollToSection('offer-message')}
 			  style={{ margin: 0 }}
 			>
 			  <span className="status-dot"></span>
-			  Want to offer me opportunities? Send me a message! ↓
+				Want to offer me opportunities? Send me a message! ↓
 			</button>
 
-			{/* Primary Action Button */}
-			<button onClick={() => scrollToSection('projects')} className="primary-btn">
-			  View Projects
-			</button>
+			<div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+			  <button onClick={() => scrollToSection('projects')} className="primary-btn">
+				View Projects
+			  </button>
+			
+			  <a 
+				href="/cv.pdf" 
+				download="cv new 2026-04-21.pdf" 
+				className="primary-btn"
+				style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+			  >
+				Get My CV
+			  </a>
+			</div>
 		  </div>
 		</div>
 
