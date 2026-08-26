@@ -24,9 +24,16 @@ export default function DemoPage({ onBack }) {
     script.id = 'bootstrap-demo-js';
     document.body.appendChild(script);
 
+    // Global cleanup when DemoPage unmounts completely
     return () => {
       document.getElementById('bootstrap-demo-css')?.remove();
       document.getElementById('bootstrap-demo-js')?.remove();
+      
+      // Reset body locks left over by Bootstrap Offcanvas/Modal
+      document.querySelectorAll('.offcanvas-backdrop, .modal-backdrop').forEach((el) => el.remove());
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
     };
   }, []);
 
@@ -45,6 +52,29 @@ export default function DemoPage({ onBack }) {
     { name: 'Instagram', icon: '📸', href: 'https://instagram.com/faqihmunandar', badgeClass: 'bg-warning-subtle text-warning' },
     { name: 'Facebook', icon: '🌐', href: 'https://facebook.com/faqihmunandar9', badgeClass: 'bg-primary-subtle text-primary' },
   ];
+
+  // Helper handler to exit cleanly back to portfolio
+  const handleBack = () => {
+    // 1. Hide mobile offcanvas if currently active
+    const offcanvasEl = document.getElementById('sidebarOffcanvas');
+    if (window.bootstrap && offcanvasEl) {
+      const bsOffcanvas = window.bootstrap.Offcanvas.getInstance(offcanvasEl);
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
+      }
+    }
+
+    // 2. Force remove backdrops & reset scroll lock styles on body
+    document.querySelectorAll('.offcanvas-backdrop, .modal-backdrop').forEach((backdrop) => backdrop.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+
+    // 3. Trigger back callback
+    if (onBack) {
+      onBack();
+    }
+  };
 
   const handleSelectApp = (id) => {
     setActiveApp(id);
@@ -161,7 +191,7 @@ export default function DemoPage({ onBack }) {
 
         {/* Pinned Bottom Button */}
         <div className="pt-3 border-top mt-auto">
-          <button className="btn btn-outline-primary btn-sm w-100 rounded-pill py-2" onClick={onBack}>
+          <button className="btn btn-outline-primary btn-sm w-100 rounded-pill py-2" onClick={handleBack}>
             ← Kembali ke Portfolio
           </button>
         </div>
@@ -246,7 +276,7 @@ export default function DemoPage({ onBack }) {
             
             {/* Pinned at bottom of mobile menu */}
             <div className="pt-3 border-top mt-auto bg-body w-100">
-              <button className="btn btn-outline-primary btn-sm w-100 rounded-pill py-2" onClick={onBack}>
+              <button className="btn btn-outline-primary btn-sm w-100 rounded-pill py-2" onClick={handleBack}>
                 ← Kembali ke Portfolio
               </button>
             </div>
