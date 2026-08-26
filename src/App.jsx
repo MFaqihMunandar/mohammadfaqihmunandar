@@ -259,171 +259,171 @@ function App() {
 
       {/* About Section */}
 	  <section id="about" className="section">
-	  <div className="content-wrapper">
-		<div className="about-grid">
+		<div className="content-wrapper">
+		  <div className="about-grid">
       
-		  {/* Left Column: Skill Breakdown & Donut Diagrams */}
-		  <div className="about-left">
-			<h2 className="section-header align-left">Programming Language</h2>
-			<div className="pie-grid">
+			{/* Left Column: Skill Breakdown & Donut Diagrams */}
+			<div className="about-left">
+			  <h2 className="section-header align-left">Programming Language</h2>
+			  <div className="pie-grid">
+				{[
+				  { 
+					name: 'React', 
+					level: 85, 
+					color: '#61dafb', 
+					icon: (
+					  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#61dafb" strokeWidth="2">
+						<ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(30 12 12)"/>
+						<ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(90 12 12)"/>
+						<ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(150 12 12)"/>
+						<circle cx="12" cy="12" r="2" fill="#61dafb"/>
+					  </svg>
+					)
+				  },
+				  { 
+					name: 'JavaScript', 
+					level: 85, 
+					color: '#f7df1e',
+					icon: (
+					  <svg viewBox="0 0 24 24" width="18" height="18" fill="#f7df1e">
+						<path d="M3 3h18v18H3V3zm11.5 13.5c.6.9 1.4 1.5 2.5 1.5 1.3 0 2.1-.6 2.1-2.1 0-1.4-.9-1.9-2.5-2.6l-.7-.3c-2.1-.9-3.4-2-3.4-4.4 0-2.4 1.9-4.1 4.7-4.1 1.9 0 3.3.7 4.2 2.3l-1.9 1.2c-.5-.9-1.2-1.3-2.3-1.3-1.1 0-1.8.6-1.8 1.4 0 1 .7 1.4 2.2 2.1l.7.3c2.4 1 3.7 2.1 3.7 4.6 0 2.8-2.2 4.4-5.3 4.4-2.5 0-4.2-1.1-5.1-2.9l1.9-1.1zM9.5 16.5c.5.8 1.1 1.4 2.1 1.4 1.1 0 1.7-.5 1.7-1.7V9h2.7v7.3c0 2.8-1.7 4.2-4.2 4.2-2.1 0-3.5-.9-4.2-2.3l1.9-1.2z"/>
+					  </svg>
+					)
+				  },
+				  { 
+					name: 'HTML & CSS', 
+					level: 90, 
+					color: '#e34f26',
+					icon: (
+					  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#e34f26" strokeWidth="2">
+						<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+					  </svg>
+					)
+				  },
+				  { 
+					name: 'Vite', 
+					level: 80, 
+					color: '#bd34fe',
+					icon: (
+					  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#bd34fe" strokeWidth="2">
+						<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+					  </svg>
+					)
+				  },
+				  { 
+					name: 'REST APIs', 
+					level: 85, 
+					color: '#10b981',
+					icon: (
+					  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#10b981" strokeWidth="2">
+						<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+						<line x1="8" y1="21" x2="16" y2="21"/>
+						<line x1="12" y1="17" x2="12" y2="21"/>
+					  </svg>
+					)
+				  },
+				  { 
+					name: 'PHP & Delphi', 
+					level: 75, 
+					color: '#777bb4',
+					icon: (
+					  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#777bb4" strokeWidth="2">
+						<polyline points="16 18 22 12 16 6"/>
+						<polyline points="8 6 2 12 8 18"/>
+					  </svg>
+					)
+				  }
+				].map((skill) => (
+				  <div key={skill.name} className="pie-item">
+					<div 
+					  className="pie-chart" 
+					  style={{
+						background: `conic-gradient(${skill.color} 0% ${skill.level}%, var(--bg-secondary) ${skill.level}% 100%)`
+					  }}
+					>
+					  <div className="pie-inner">
+						{skill.icon}
+						<span className="pie-percent">{skill.level}%</span>
+					  </div>
+					</div>
+					<span className="pie-label">{skill.name}</span>
+				  </div>
+				))}
+			  </div>
+			</div>
+
+			{/* Right Column: Programming Skill Description */}
+			<div className="about-right">
+			  <h2 className="section-header align-left">My Skills</h2>
+			  <p className="paragraph align-left">
+				I specialize in building responsive, modern frontend interfaces. My main tech stack focuses on <strong>React</strong> and contemporary tools like <strong>Vite</strong> to ensure high performance, maintainable architectures, and dynamic UI solutions.
+			  </p>
+			  <p className="paragraph align-left">
+				I am also proficient in foundational web design using <strong>HTML/CSS</strong>, connecting frontend apps with <strong>REST APIs</strong>, and managing traditional systems with <strong>PHP</strong> and <strong>Delphi</strong>.
+			  </p>
+			</div>
+
+		  </div>
+
+		  {/* Reversed Additional Capabilities Section (Description Left, Icons Right) */}
+		  <div className="additional-skills-wrapper">
+			<div className="additional-left">
+			  <h3 className="skills-subtitle align-left">Additional Capabilities</h3>
+			  <p className="paragraph align-left" style={{ margin: 0 }}>
+				Beyond software programming, I am experienced in vector graphic design, image editing, video post-production, and micro-controller circuit projects.
+			  </p>
+			</div>
+
+			<div className="additional-right">
 			  {[
 				{ 
-				  name: 'React', 
-				  level: 85, 
-				  color: '#61dafb', 
+				  name: 'CorelDraw', 
 				  icon: (
-					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#61dafb" strokeWidth="2">
-					  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(30 12 12)"/>
-					  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(90 12 12)"/>
-					  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(150 12 12)"/>
-					  <circle cx="12" cy="12" r="2" fill="#61dafb"/>
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					  <circle cx="12" cy="12" r="9"/>
+					  <path d="M12 8v8M8 12h8"/>
 					</svg>
 				  )
 				},
 				{ 
-				  name: 'JavaScript', 
-				  level: 85, 
-				  color: '#f7df1e',
+				  name: 'Adobe Photoshop', 
 				  icon: (
-					<svg viewBox="0 0 24 24" width="18" height="18" fill="#f7df1e">
-					  <path d="M3 3h18v18H3V3zm11.5 13.5c.6.9 1.4 1.5 2.5 1.5 1.3 0 2.1-.6 2.1-2.1 0-1.4-.9-1.9-2.5-2.6l-.7-.3c-2.1-.9-3.4-2-3.4-4.4 0-2.4 1.9-4.1 4.7-4.1 1.9 0 3.3.7 4.2 2.3l-1.9 1.2c-.5-.9-1.2-1.3-2.3-1.3-1.1 0-1.8.6-1.8 1.4 0 1 .7 1.4 2.2 2.1l.7.3c2.4 1 3.7 2.1 3.7 4.6 0 2.8-2.2 4.4-5.3 4.4-2.5 0-4.2-1.1-5.1-2.9l1.9-1.1zM9.5 16.5c.5.8 1.1 1.4 2.1 1.4 1.1 0 1.7-.5 1.7-1.7V9h2.7v7.3c0 2.8-1.7 4.2-4.2 4.2-2.1 0-3.5-.9-4.2-2.3l1.9-1.2z"/>
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					  <rect x="3" y="3" width="18" height="18" rx="3"/>
+					  <path d="M7 17V9h4a2 2 0 0 1 0 4H7"/>
 					</svg>
 				  )
 				},
 				{ 
-				  name: 'HTML & CSS', 
-				  level: 90, 
-				  color: '#e34f26',
+				  name: 'Adobe Premiere', 
 				  icon: (
-					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#e34f26" strokeWidth="2">
-					  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					  <rect x="3" y="3" width="18" height="18" rx="3"/>
+					  <polygon points="10 8 16 12 10 16 10 8"/>
+					</svg>
+				  )
+				},
+			    { 
+				  name: 'Arduino IDE', 
+				  icon: (
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					  <circle cx="8" cy="12" r="3"/>
+					  <circle cx="16" cy="12" r="3"/>
+					  <line x1="7" y1="12" x2="9" y2="12"/>
+					  <line x1="15" y1="12" x2="17" y2="12"/>
+					  <line x1="16" y1="11" x2="16" y2="13"/>
 					</svg>
 				  )
 				},
 				{ 
-				  name: 'Vite', 
-				  level: 80, 
-				  color: '#bd34fe',
+				  name: 'IoT (Internet of Things)', 
 				  icon: (
-					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#bd34fe" strokeWidth="2">
-					  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+					<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					  <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+					  <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+					  <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+					  <line x1="12" y1="20" x2="12.01" y2="20"/>
 					</svg>
-				  )
-				},
-				{ 
-				  name: 'REST APIs', 
-				  level: 85, 
-				  color: '#10b981',
-				  icon: (
-					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#10b981" strokeWidth="2">
-					  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-					  <line x1="8" y1="21" x2="16" y2="21"/>
-					  <line x1="12" y1="17" x2="12" y2="21"/>
-					</svg>
-				  )
-				},
-				{ 
-				  name: 'PHP & Delphi', 
-				  level: 75, 
-				  color: '#777bb4',
-				  icon: (
-					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#777bb4" strokeWidth="2">
-					  <polyline points="16 18 22 12 16 6"/>
-					  <polyline points="8 6 2 12 8 18"/>
-					</svg>
-				  )
-				}
-			  ].map((skill) => (
-				<div key={skill.name} className="pie-item">
-				  <div 
-					className="pie-chart" 
-					style={{
-					  background: `conic-gradient(${skill.color} 0% ${skill.level}%, var(--bg-secondary) ${skill.level}% 100%)`
-					}}
-				  >
-					<div className="pie-inner">
-					  {skill.icon}
-					  <span className="pie-percent">{skill.level}%</span>
-					</div>
-				  </div>
-				  <span className="pie-label">{skill.name}</span>
-				</div>
-			  ))}
-			</div>
-		  </div>
-
-		  {/* Right Column: Programming Skill Description */}
-		  <div className="about-right">
-			<h2 className="section-header align-left">My Skills</h2>
-			<p className="paragraph align-left">
-			  I specialize in building responsive, modern frontend interfaces. My main tech stack focuses on <strong>React</strong> and contemporary tools like <strong>Vite</strong> to ensure high performance, maintainable architectures, and dynamic UI solutions.
-			</p>
-			<p className="paragraph align-left">
-			  I am also proficient in foundational web design using <strong>HTML/CSS</strong>, connecting frontend apps with <strong>REST APIs</strong>, and managing traditional systems with <strong>PHP</strong> and <strong>Delphi</strong>.
-			</p>
-		  </div>
-
-		</div>
-
-		{/* Reversed Additional Capabilities Section (Description Left, Icons Right) */}
-		<div className="additional-skills-wrapper">
-		  <div className="additional-left">
-			<h3 className="skills-subtitle align-left">Additional Capabilities</h3>
-			<p className="paragraph align-left" style={{ margin: 0 }}>
-			  Beyond software programming, I am experienced in vector graphic design, image editing, video post-production, and micro-controller circuit projects.
-			</p>
-		  </div>
-
-		  <div className="additional-right">
-			{[
-			  { 
-				name: 'CorelDraw', 
-				icon: (
-				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-					<circle cx="12" cy="12" r="9"/>
-					<path d="M12 8v8M8 12h8"/>
-				  </svg>
-				)
-			  },
-			  { 
-				name: 'Adobe Photoshop', 
-				icon: (
-				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-					<rect x="3" y="3" width="18" height="18" rx="3"/>
-					<path d="M7 17V9h4a2 2 0 0 1 0 4H7"/>
-				  </svg>
-				)
-			  },
-			  { 
-				name: 'Adobe Premiere', 
-				icon: (
-				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-					<rect x="3" y="3" width="18" height="18" rx="3"/>
-					<polygon points="10 8 16 12 10 16 10 8"/>
-				  </svg>
-				)
-			  },
-			  { 
-				name: 'Arduino IDE', 
-				icon: (
-				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-					<circle cx="8" cy="12" r="3"/>
-					<circle cx="16" cy="12" r="3"/>
-					<line x1="7" y1="12" x2="9" y2="12"/>
-					<line x1="15" y1="12" x2="17" y2="12"/>
-					<line x1="16" y1="11" x2="16" y2="13"/>
-				  </svg>
-				)
-			  },
-			  { 
-				name: 'IoT (Internet of Things)', 
-				icon: (
-				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
-					<path d="M5 12.55a11 11 0 0 1 14.08 0"/>
-					<path d="M1.42 9a16 16 0 0 1 21.16 0"/>
-					<path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
-					<line x1="12" y1="20" x2="12.01" y2="20"/>
-				  </svg>
 				  )
 				}
 			  ].map((tool) => (
@@ -439,44 +439,87 @@ function App() {
 
       {/* Projects Section */}
       <section id="projects" className="section">
-        <div className="content-wrapper">
-          <h2 className="section-header">Featured Projects & Web Apps</h2>
-          
-          <div className="project-grid">
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Portfolio Site</h3>
-                <span className="date-tag">{formatDateIndonesian('2026-08-20')}</span>
-              </div>
-              <p className="card-text">Modern personal site built with React and Vite, hosted on GitHub Pages.</p>
-              <span className="card-tech">React • Vite • GitHub Pages</span>
-            </div>
+  <div className="content-wrapper">
+    <h2 className="section-header">Featured Projects & Web Apps</h2>
+    <p className="paragraph" style={{ maxWidth: '600px', margin: '0 auto 32px' }}>
+      A showcase of web applications highlighting modern frontend techniques, responsive architectures, and state management.
+    </p>
 
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Demo Web App</h3>
-                <span className="date-tag">{formatDateIndonesian('2026-08-22')}</span>
-              </div>
-              <p className="card-text">
-                Interactive web application showcase highlighting component state management, local utilities, and dynamic API feeds.
-              </p>
-              <span className="card-tech">JavaScript • React State • REST API</span>
-              <div>
-                <a 
-                  href="#demo" 
-                  onClick={(e) => { 
-                    e.preventDefault(); 
-                    setViewDemo(true); 
-                  }} 
-                  className="demo-link"
-                >
-                  Launch Live Demo →
-                </a>
-              </div>
-            </div>
-          </div>
+    <div className="project-grid">
+      
+      {/* Project 1: Personal Portfolio */}
+      <div className="card project-card">
+        <div className="card-top">
+          <span className="project-badge">Portfolio</span>
+          <span className="date-tag">{formatDateIndonesian('2026-08-20')}</span>
         </div>
-      </section>
+
+        <h3 className="card-title">Modern Personal Portfolio</h3>
+        <p className="card-text">
+          A high-performance responsive portfolio platform featuring dynamic theme toggling, custom CSS animations, and interactive skill visualizers.
+        </p>
+
+        <ul className="project-highlights">
+          <li>Custom Dark/Light mode state implementation</li>
+          <li>Radial floating contact menu & auto-sliding image gallery</li>
+          <li>Optimized asset delivery & GitHub Pages deployment</li>
+        </ul>
+
+        <div className="tech-stack-container">
+          {['React', 'Vite', 'CSS3', 'GitHub Pages'].map((tech) => (
+            <span key={tech} className="tech-pill">{tech}</span>
+          ))}
+        </div>
+
+        <div className="card-actions">
+          <a href="https://github.com/mfaqihmunandar" target="_blank" rel="noreferrer" className="action-link secondary-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            Source Code
+          </a>
+        </div>
+      </div>
+
+      {/* Project 2: Interactive Demo Web App */}
+      <div className="card project-card">
+        <div className="card-top">
+          <span className="project-badge accent">Interactive App</span>
+          <span className="date-tag">{formatDateIndonesian('2026-08-22')}</span>
+        </div>
+
+        <h3 className="card-title">Interactive Demo Showcase</h3>
+        <p className="card-text">
+          A feature-rich web application demonstrating frontend utility integrations, complex state management, and real-time API integrations.
+        </p>
+
+        <ul className="project-highlights">
+          <li>REST API integration with asynchronous data handling</li>
+          <li>Local utility tools & custom React hooks</li>
+          <li>Modular component architecture with live state updates</li>
+        </ul>
+
+        <div className="tech-stack-container">
+          {['JavaScript', 'React Hooks', 'REST API', 'CSS Modules'].map((tech) => (
+            <span key={tech} className="tech-pill">{tech}</span>
+          ))}
+        </div>
+
+        <div className="card-actions">
+          <a 
+            href="#demo" 
+            onClick={(e) => { 
+              e.preventDefault(); 
+              setViewDemo(true); 
+            }} 
+            className="action-link primary-link"
+          >
+            Launch Live Demo →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* Offer / Message Section */}
       <section id="offer-message" className="section message-section">

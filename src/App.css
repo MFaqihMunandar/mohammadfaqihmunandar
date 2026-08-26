@@ -731,3 +731,104 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  background-color: var(--bg-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.project-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.project-badge.accent {
+  background-color: var(--accent-bg);
+  color: var(--accent-color);
+}
+
+.project-highlights {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 12px 0 20px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.project-highlights li {
+  margin-bottom: 4px;
+}
+
+/* Tech Stack Badges */
+.tech-stack-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.tech-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  background-color: var(--accent-bg);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* Project Card Actions */
+.card-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.action-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.primary-link {
+  color: var(--accent-color);
+}
+
+.secondary-link {
+  color: var(--text-secondary);
+}
+
+.action-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
