@@ -7,11 +7,31 @@ function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [viewDemo, setViewDemo] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  
-  // Theme State
   const [darkMode, setDarkMode] = useState(false);
 
-  // Sync theme attribute with root element
+  // Auto-slide image state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Message Form State
+  const [message, setMessage] = useState('');
+
+  const heroImages = [
+    'me.jpg',
+    'gymme2.jpg',
+    'gymme.jpg',
+    'WhatsApp Image 2026-08-26 at 10.45.20 (3).jpeg',
+    'WhatsApp Image 2026-08-26 at 10.45.21 (1).jpeg',
+    'WhatsApp Image 2026-08-26 at 10.45.22.jpeg',
+	'oldme.jpg'
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
@@ -40,14 +60,13 @@ function App() {
     if (viewDemo) return;
 
     const handleScroll = () => {
-      // If near the top, mark 'home' as active
       if (window.scrollY < 150) {
         setActiveTab('home');
         updateTabTitle('home');
         return;
       }
 
-      const sections = ['about', 'projects'];
+      const sections = ['about', 'projects', 'offer-message'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -68,17 +87,32 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [viewDemo]);
 
+  // Handlers for sending messages
+  const handleSendEmail = (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    const subject = encodeURIComponent('Opportunity Offer / Work Inquiry');
+    const body = encodeURIComponent(message);
+    window.location.href = `mailto:faqihmunandar479@gmail.com?subject=${subject}&body=${body}`;
+  };
+
+  const handleSendWhatsApp = (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    const text = encodeURIComponent(message);
+    window.open(`https://wa.me/6289630286950?text=${text}`, '_blank');
+  };
+
   if (viewDemo) {
     return <DemoPage onBack={() => setViewDemo(false)} />;
   }
 
-  // Define radial links (Spread across a 90-degree quadrant from bottom-right)
   const contactLinks = [
     {
       name: 'Email',
       href: 'mailto:faqihmunandar479@gmail.com',
       color: '#EA4335',
-      angle: '0deg', // Directly Left
+      angle: '0deg',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EA4335" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -112,9 +146,9 @@ function App() {
     },
     {
       name: 'Facebook',
-      href: 'https://facebook.com/faqihmunandar',
+      href: 'https://facebook.com/faqihmunandar9',
       color: '#1877F2',
-      angle: '90deg', // Directly Up
+      angle: '90deg',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1877F2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
@@ -129,7 +163,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-inner">
           <h2 className="nav-logo" onClick={() => scrollToSection('home')}>
-            please run M.F.M<span style={{ color: '#2563eb' }}>.</span>
+            MFM<span style={{ color: '#2563eb' }}>.</span>
           </h2>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -145,7 +179,6 @@ function App() {
               ))}
             </div>
 
-            {/* Dark / Light Mode Toggle Button */}
             <button 
               className="theme-toggle-btn" 
               onClick={() => setDarkMode(!darkMode)}
@@ -153,7 +186,6 @@ function App() {
               title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
               {darkMode ? (
-                /* Sun Icon (shown when in Dark Mode to switch to Light) */
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="5"></circle>
                   <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -166,7 +198,6 @@ function App() {
                   <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
               ) : (
-                /* Moon / Crescent Icon (shown when in Light Mode to switch to Dark) */
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
@@ -178,36 +209,233 @@ function App() {
 
       {/* Hero Section */}
       <section id="hero" className="hero-section">
-        <div className="badge">Available for opportunities</div>
-        <h1 className="title">Mohammad Faqih Munandar</h1>
-        <p className="subtitle">
-          Frontend Developer crafting modern, high-performance web applications using React and contemporary tools.
-        </p>
-        <div className="button-group">
-          <button onClick={() => scrollToSection('projects')} className="primary-btn">
-            View Projects
-          </button>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="secondary-btn">
-            Contact Me
-          </button>
-        </div>
-      </section>
+        <div className="hero-content">
+		  <h1 className="title">Mohammad Faqih Munandar</h1>
+		  <p className="subtitle">
+			Frontend Developer crafting modern, high-performance web applications using React and contemporary tools.
+		  </p>
+		  
+		  <div className="button-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
+			{/* Offering Button positioned above View Projects */}
+			<button 
+			  className="badge-btn" 
+			  onClick={() => scrollToSection('offer-message')}
+			  style={{ margin: 0 }}
+			>
+			  <span className="status-dot"></span>
+			  Want to offer me opportunities? Send me a message! ↓
+			</button>
 
-      {/* About Section */}
-      <section id="about" className="section">
-        <div className="content-wrapper">
-          <h2 className="section-header">About Me</h2>
-          <p className="paragraph">
-            I focus on building responsive, user-friendly digital interfaces with modern component architectures. 
-            Passionate about web standards, UI design, and scalable frontend development.
-          </p>
-          <div className="skills-grid">
-            {['React', 'JavaScript', 'Vite', 'Git', 'CSS / HTML', 'REST APIs', 'PHP', 'Delphi'].map((skill) => (
-              <span key={skill} className="skill-tag">{skill}</span>
+			{/* Primary Action Button */}
+			<button onClick={() => scrollToSection('projects')} className="primary-btn">
+			  View Projects
+			</button>
+		  </div>
+		</div>
+
+        {/* Auto-sliding Image Container */}
+        <div className="hero-slider-container">
+          <div className="hero-slider">
+            {heroImages.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Slide ${index + 1}`}
+                className={`slider-image ${index === currentImageIndex ? 'active' : ''}`}
+              />
+            ))}
+          </div>
+          <div className="slider-dots">
+            {heroImages.map((_, index) => (
+              <span
+                key={index}
+                className={`dot ${index === currentImageIndex ? 'active' : ''}`}
+                onClick={() => setCurrentImageIndex(index)}
+              />
             ))}
           </div>
         </div>
       </section>
+
+      {/* About Section */}
+	  <section id="about" className="section">
+	  <div className="content-wrapper">
+		<div className="about-grid">
+      
+		  {/* Left Column: Skill Breakdown & Donut Diagrams */}
+		  <div className="about-left">
+			<h2 className="section-header align-left">Programming Language</h2>
+			<div className="pie-grid">
+			  {[
+				{ 
+				  name: 'React', 
+				  level: 85, 
+				  color: '#61dafb', 
+				  icon: (
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#61dafb" strokeWidth="2">
+					  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(30 12 12)"/>
+					  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(90 12 12)"/>
+					  <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(150 12 12)"/>
+					  <circle cx="12" cy="12" r="2" fill="#61dafb"/>
+					</svg>
+				  )
+				},
+				{ 
+				  name: 'JavaScript', 
+				  level: 85, 
+				  color: '#f7df1e',
+				  icon: (
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="#f7df1e">
+					  <path d="M3 3h18v18H3V3zm11.5 13.5c.6.9 1.4 1.5 2.5 1.5 1.3 0 2.1-.6 2.1-2.1 0-1.4-.9-1.9-2.5-2.6l-.7-.3c-2.1-.9-3.4-2-3.4-4.4 0-2.4 1.9-4.1 4.7-4.1 1.9 0 3.3.7 4.2 2.3l-1.9 1.2c-.5-.9-1.2-1.3-2.3-1.3-1.1 0-1.8.6-1.8 1.4 0 1 .7 1.4 2.2 2.1l.7.3c2.4 1 3.7 2.1 3.7 4.6 0 2.8-2.2 4.4-5.3 4.4-2.5 0-4.2-1.1-5.1-2.9l1.9-1.1zM9.5 16.5c.5.8 1.1 1.4 2.1 1.4 1.1 0 1.7-.5 1.7-1.7V9h2.7v7.3c0 2.8-1.7 4.2-4.2 4.2-2.1 0-3.5-.9-4.2-2.3l1.9-1.2z"/>
+					</svg>
+				  )
+				},
+				{ 
+				  name: 'HTML & CSS', 
+				  level: 90, 
+				  color: '#e34f26',
+				  icon: (
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#e34f26" strokeWidth="2">
+					  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+					</svg>
+				  )
+				},
+				{ 
+				  name: 'Vite', 
+				  level: 80, 
+				  color: '#bd34fe',
+				  icon: (
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#bd34fe" strokeWidth="2">
+					  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+					</svg>
+				  )
+				},
+				{ 
+				  name: 'REST APIs', 
+				  level: 85, 
+				  color: '#10b981',
+				  icon: (
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#10b981" strokeWidth="2">
+					  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+					  <line x1="8" y1="21" x2="16" y2="21"/>
+					  <line x1="12" y1="17" x2="12" y2="21"/>
+					</svg>
+				  )
+				},
+				{ 
+				  name: 'PHP & Delphi', 
+				  level: 75, 
+				  color: '#777bb4',
+				  icon: (
+					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#777bb4" strokeWidth="2">
+					  <polyline points="16 18 22 12 16 6"/>
+					  <polyline points="8 6 2 12 8 18"/>
+					</svg>
+				  )
+				}
+			  ].map((skill) => (
+				<div key={skill.name} className="pie-item">
+				  <div 
+					className="pie-chart" 
+					style={{
+					  background: `conic-gradient(${skill.color} 0% ${skill.level}%, var(--bg-secondary) ${skill.level}% 100%)`
+					}}
+				  >
+					<div className="pie-inner">
+					  {skill.icon}
+					  <span className="pie-percent">{skill.level}%</span>
+					</div>
+				  </div>
+				  <span className="pie-label">{skill.name}</span>
+				</div>
+			  ))}
+			</div>
+		  </div>
+
+		  {/* Right Column: Programming Skill Description */}
+		  <div className="about-right">
+			<h2 className="section-header align-left">My Skills</h2>
+			<p className="paragraph align-left">
+			  I specialize in building responsive, modern frontend interfaces. My main tech stack focuses on <strong>React</strong> and contemporary tools like <strong>Vite</strong> to ensure high performance, maintainable architectures, and dynamic UI solutions.
+			</p>
+			<p className="paragraph align-left">
+			  I am also proficient in foundational web design using <strong>HTML/CSS</strong>, connecting frontend apps with <strong>REST APIs</strong>, and managing traditional systems with <strong>PHP</strong> and <strong>Delphi</strong>.
+			</p>
+		  </div>
+
+		</div>
+
+		{/* Reversed Additional Capabilities Section (Description Left, Icons Right) */}
+		<div className="additional-skills-wrapper">
+		  <div className="additional-left">
+			<h3 className="skills-subtitle align-left">Additional Capabilities</h3>
+			<p className="paragraph align-left" style={{ margin: 0 }}>
+			  Beyond software programming, I am experienced in vector graphic design, image editing, video post-production, and micro-controller circuit projects.
+			</p>
+		  </div>
+
+		  <div className="additional-right">
+			{[
+			  { 
+				name: 'CorelDraw', 
+				icon: (
+				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					<circle cx="12" cy="12" r="9"/>
+					<path d="M12 8v8M8 12h8"/>
+				  </svg>
+				)
+			  },
+			  { 
+				name: 'Adobe Photoshop', 
+				icon: (
+				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					<rect x="3" y="3" width="18" height="18" rx="3"/>
+					<path d="M7 17V9h4a2 2 0 0 1 0 4H7"/>
+				  </svg>
+				)
+			  },
+			  { 
+				name: 'Adobe Premiere', 
+				icon: (
+				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					<rect x="3" y="3" width="18" height="18" rx="3"/>
+					<polygon points="10 8 16 12 10 16 10 8"/>
+				  </svg>
+				)
+			  },
+			  { 
+				name: 'Arduino IDE', 
+				icon: (
+				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					<circle cx="8" cy="12" r="3"/>
+					<circle cx="16" cy="12" r="3"/>
+					<line x1="7" y1="12" x2="9" y2="12"/>
+					<line x1="15" y1="12" x2="17" y2="12"/>
+					<line x1="16" y1="11" x2="16" y2="13"/>
+				  </svg>
+				)
+			  },
+			  { 
+				name: 'IoT (Internet of Things)', 
+				icon: (
+				  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+					<path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+					<path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+					<path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+					<line x1="12" y1="20" x2="12.01" y2="20"/>
+				  </svg>
+				  )
+				}
+			  ].map((tool) => (
+				<span key={tool.name} className="skill-tag icon-tag">
+				  {tool.icon}
+				  {tool.name}
+				</span>
+			  ))}
+			</div>
+		  </div>
+		</div>
+	  </section>
 
       {/* Projects Section */}
       <section id="projects" className="section">
@@ -246,6 +474,41 @@ function App() {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Offer / Message Section */}
+      <section id="offer-message" className="section message-section">
+        <div className="content-wrapper message-box">
+          <h2 className="section-header">Send an Offering Job or Just Message Me</h2>
+          <p className="paragraph">
+            Have a freelance project, job position, or opportunity in mind? Type your message below and send it directly via Email or WhatsApp.
+          </p>
+
+          <textarea
+            className="message-textarea"
+            rows="5"
+            placeholder="Hi Faqih, I would like to discuss an opportunity..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
+
+          <div className="send-button-group">
+            <button 
+              className="send-btn email-btn" 
+              onClick={handleSendEmail}
+              disabled={!message.trim()}
+            >
+              ✉ Send via Email
+            </button>
+            <button 
+              className="send-btn wa-btn" 
+              onClick={handleSendWhatsApp}
+              disabled={!message.trim()}
+            >
+              💬 Send via WhatsApp
+            </button>
           </div>
         </div>
       </section>

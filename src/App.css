@@ -114,10 +114,18 @@
 
 /* Hero Section */
 .hero-section {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 120px 24px 80px;
-  text-align: center;
+  padding: 100px 24px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.hero-content {
+  flex: 1;
+  text-align: left;
 }
 
 .badge {
@@ -138,6 +146,7 @@
   letter-spacing: -0.02em;
   margin-bottom: 16px;
   color: var(--text-primary);
+  line-height: 1.2;
 }
 
 .subtitle {
@@ -149,7 +158,86 @@
 .button-group {
   display: flex;
   gap: 12px;
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+/* Auto-slider Styling */
+.hero-slider-container {
+  flex: 1;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+}
+
+.slider-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slider-image.active {
+  opacity: 1;
+}
+
+.slider-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    padding: 60px 24px 40px;
+    text-align: center;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .hero-slider-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-slider {
+    height: 250px;
+  }
 }
 
 .primary-btn {
@@ -361,4 +449,285 @@
     calc(cos(var(--angle)) * -90px),
     calc(sin(var(--angle)) * -90px)
   ) scale(1.1) !important;
+}
+
+/* Interactive Hero Badge Button */
+.badge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background-color: var(--accent-bg);
+  color: var(--accent-color);
+  font-size: 0.825rem;
+  font-weight: 600;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.badge-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+/* Offer Message Section */
+.message-section {
+  background-color: var(--bg-secondary);
+}
+
+.message-box {
+  max-width: 650px;
+}
+
+.message-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.message-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.send-button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.email-btn {
+  background-color: #EA4335;
+  color: #ffffff;
+}
+
+.email-btn:hover:not(:disabled) {
+  background-color: #d93025;
+  transform: translateY(-1px);
+}
+
+.wa-btn {
+  background-color: #25D366;
+  color: #ffffff;
+}
+
+.wa-btn:hover:not(:disabled) {
+  background-color: #1ebe5d;
+  transform: translateY(-1px);
+}
+
+.skills-container {
+  margin-top: 32px;
+  text-align: left;
+}
+
+.skills-subtitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.skills-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skill-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.skill-percentage {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+  transition: width 0.6s ease-in-out;
+}
+
+/* Additional / Secondary Tags */
+.additional-skills-container {
+  margin-top: 40px;
+}
+
+.secondary-tag {
+  background-color: var(--bg-card);
+  border-style: dashed;
+  opacity: 0.9;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.align-left {
+  text-align: left !important;
+}
+
+/* Donut Diagram Grid Layout */
+.pie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.pie-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.pie-chart {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pie-inner {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background-color: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.pie-percent {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pie-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Reversed Additional Capabilities Section */
+.additional-skills-wrapper {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px dashed var(--border-color);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.additional-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.icon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+  .about-grid, 
+  .additional-skills-wrapper {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .pie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .pie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
