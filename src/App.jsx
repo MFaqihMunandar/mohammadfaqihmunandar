@@ -129,7 +129,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-inner">
           <h2 className="nav-logo" onClick={() => scrollToSection('home')}>
-            M.F.M<span style={{ color: '#2563eb' }}>.</span>
+            uM.F.M<span style={{ color: '#2563eb' }}>.</span>
           </h2>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
