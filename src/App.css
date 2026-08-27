@@ -832,3 +832,90 @@
   opacity: 0.8;
   text-decoration: underline;
 }
+
+/* Container layout for project action buttons */
+.card-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* Base style for noticeable action buttons */
+.btn-noticeable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Primary High-Contrast Demo Button */
+.primary-accent-btn {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: 1px solid #2563eb;
+}
+
+.primary-accent-btn:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.primary-accent-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+/* Secondary Github Button */
+.github-outline-btn {
+  background-color: transparent;
+  color: var(--text-color, #1e293b);
+  border: 1px solid #cbd5e1;
+}
+
+.github-outline-btn:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode overrides for GitHub outline button */
+[data-theme='dark'] .github-outline-btn {
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+[data-theme='dark'] .github-outline-btn:hover {
+  background-color: #1e293b;
+  border-color: #64748b;
+}
+
+.hero-btn-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Mobile Screens (768px and below): Centered */
+@media (max-width: 768px) {
+  .hero-btn-group {
+    justify-content: center;
+  }
+}

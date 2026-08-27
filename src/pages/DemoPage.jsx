@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import CalculatorApp from './demos/CalculatorApp';
-import UndianApp from './demos/UndianApp';
-import TodoApp from './demos/TodoApp';
-import WeatherApp from './demos/WeatherApp';
-import TimerApp from './demos/TimerApp';
-import CurrencyConverterApp from './demos/CurrencyConverterApp';
+import { useNavigate } from 'react-router-dom';
 
-export default function DemoPage({ onBack }) {
+// Relative imports matching src/pages/ -> src/components/demos/
+import CalculatorApp from '../components/demos/CalculatorApp';
+import UndianApp from '../components/demos/UndianApp';
+import TodoApp from '../components/demos/TodoApp';
+import WeatherApp from '../components/demos/WeatherApp';
+import TimerApp from '../components/demos/TimerApp';
+import CurrencyConverterApp from '../components/demos/CurrencyConverterApp';
+
+export default function DemoPage() {
+  const navigate = useNavigate();
   const [activeApp, setActiveApp] = useState('calculator');
   const [showContactMenu, setShowContactMenu] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+
+  // 1. Add Loading State
+  const [isLoading, setIsLoading] = useState(true);
 
   // Dynamically inject Bootstrap 5 CSS & JS
   useEffect(() => {
@@ -22,6 +29,12 @@ export default function DemoPage({ onBack }) {
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js';
     script.id = 'bootstrap-demo-js';
+    
+    // Hide loading screen after script loads (plus a small delay for smooth feel)
+    script.onload = () => {
+      setTimeout(() => setIsLoading(false), 500);
+    };
+
     document.body.appendChild(script);
 
     // Global cleanup when DemoPage unmounts completely
@@ -53,27 +66,19 @@ export default function DemoPage({ onBack }) {
     { name: 'Facebook', icon: '🌐', href: 'https://facebook.com/faqihmunandar9', badgeClass: 'bg-primary-subtle text-primary' },
   ];
 
-  // Helper handler to exit cleanly back to portfolio
   const handleBack = () => {
-    // 1. Hide mobile offcanvas if currently active
     const offcanvasEl = document.getElementById('sidebarOffcanvas');
     if (window.bootstrap && offcanvasEl) {
       const bsOffcanvas = window.bootstrap.Offcanvas.getInstance(offcanvasEl);
-      if (bsOffcanvas) {
-        bsOffcanvas.hide();
-      }
+      if (bsOffcanvas) bsOffcanvas.hide();
     }
 
-    // 2. Force remove backdrops & reset scroll lock styles on body
-    document.querySelectorAll('.offcanvas-backdrop, .modal-backdrop').forEach((backdrop) => backdrop.remove());
+    document.querySelectorAll('.offcanvas-backdrop, .modal-backdrop').forEach((el) => el.remove());
     document.body.classList.remove('modal-open');
     document.body.style.overflow = '';
     document.body.style.paddingRight = '';
 
-    // 3. Trigger back callback
-    if (onBack) {
-      onBack();
-    }
+    navigate('/'); 
   };
 
   const handleSelectApp = (id) => {
@@ -86,7 +91,6 @@ export default function DemoPage({ onBack }) {
       }
     }
 
-    // Backdrop cleanup for mobile
     setTimeout(() => {
       document.querySelectorAll('.offcanvas-backdrop').forEach((backdrop) => backdrop.remove());
       document.body.classList.remove('modal-open');
@@ -97,10 +101,9 @@ export default function DemoPage({ onBack }) {
 
   const renderProfileHeader = () => (
     <div className="pb-3 mb-3 border-bottom px-1">
-      {/* Profile Info */}
       <div className="d-flex align-items-center gap-3">
         <img
-          src="oldme.jpg" 
+          src={`${import.meta.env.BASE_URL}oldme.jpg`}
           alt="Mohammad Faqih Munandar"
           className="rounded-circle border flex-shrink-0"
           style={{ width: '48px', height: '48px', objectFit: 'cover' }}
@@ -137,12 +140,10 @@ export default function DemoPage({ onBack }) {
               className="d-grid align-items-center"
               style={{ gridTemplateColumns: '32px 1fr' }}
             >
-              {/* Icon Container with Fixed Width */}
               <div className="fs-5 d-flex align-items-center justify-content-start">
                 {item.icon}
               </div>
 
-              {/* Stacked Menu Title and Subtitle */}
               <div className="text-start">
                 <div
                   className={`lh-sm ${isActive ? 'fw-bold' : 'fw-semibold'}`}
@@ -163,6 +164,20 @@ export default function DemoPage({ onBack }) {
       })}
     </div>
   );
+
+  // 2. Full-Screen Loading Screen Block
+  if (isLoading) {
+    return (
+      <div 
+        className="d-flex flex-column align-items-center justify-content-center min-vh-100 w-100 position-fixed top-0 start-0 bg-white" 
+        style={{ zIndex: 9999 }}
+      >
+        <div className="spinner-border text-primary mb-3" role="status" style={{ width: '3rem', height: '3rem' }}>
+          
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
