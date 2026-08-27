@@ -203,6 +203,8 @@ function PortfolioPage() {
 			<strong>Full-Stack Developer</strong>
 			<br />
 			Crafting modern, scalable web applications tailored to custom client requirements using React, PHP, Delphi, and contemporary tools.
+			<br /><br />
+			I currently engineer custom financial solutions at <a href="https://mcsolusindo.com" target="_blank" rel="noopener noreferrer">PT. Mitra Cerah Solusindo</a>. My work focuses on building end-to-end management systems—covering order workflows, analytical reporting, and payment processing—tailored for banks (BPR), cooperatives, retail stores, and FnB businesses.
 		  </p>
           
           <div className="button-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
