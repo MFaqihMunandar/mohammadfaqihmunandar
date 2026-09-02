@@ -8,6 +8,7 @@ import TodoApp from '../components/demos/TodoApp';
 import WeatherApp from '../components/demos/WeatherApp';
 import TimerApp from '../components/demos/TimerApp';
 import CurrencyConverterApp from '../components/demos/CurrencyConverterApp';
+import Demoauth from '../components/demos/demoauth';
 
 export default function DemoPage() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ export default function DemoPage() {
     { id: 'weather', name: 'Cuaca Realtime', icon: '🌤️', badge: 'REST API Integration' },
     { id: 'timer', name: 'Stopwatch & Timer', icon: '⏱️', badge: 'Custom React Hooks' },
     { id: 'currency', name: 'Konversi Mata Uang', icon: '💱', badge: 'Fetch Live API' },
+    { id: 'demoauth', name: 'Auth Low - High', icon: '🔐', badge: 'Auth Level' },
   ];
 
   const contactLinks = [
@@ -307,6 +309,7 @@ export default function DemoPage() {
             {activeApp === 'weather' && <WeatherApp />}
             {activeApp === 'timer' && <TimerApp />}
             {activeApp === 'currency' && <CurrencyConverterApp />}
+            {activeApp === 'demoauth' && <Demoauth />}
           </div>
         </main>
       </div>
