@@ -52,6 +52,16 @@ const Icons = {
       <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
       <line x1="1" y1="1" x2="23" y2="23"></line>
     </svg>
+  ),
+  ChevronDown: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  ),
+  ChevronUp: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
   )
 };
 
@@ -66,8 +76,8 @@ export default function CalculatorApp() {
   const [isScientific, setIsScientific] = useState(false);
 
   const [hoveredPointId, setHoveredPointId] = useState(null);
+  const [showIntersectionList, setShowIntersectionList] = useState(true);
 
-  // Added `visible: true` property to equation state
   const [equations, setEquations] = useState([
     { id: '1', expr: 'x + 1', color: COLOR_PALETTE[0], visible: true },
     { id: '2', expr: 'x^2', color: COLOR_PALETTE[1], visible: true }
@@ -194,7 +204,6 @@ export default function CalculatorApp() {
     const toSvgY = (y) => height - ((y - yMin) / (yMax - yMin)) * height;
 
     const paths = equations.map((eq) => {
-      // Skip path generation if marked invisible
       if (!eq.visible) return { id: eq.id, pathStr: '', color: eq.color };
 
       let points = [];
@@ -216,7 +225,6 @@ export default function CalculatorApp() {
       return { id: eq.id, pathStr: fullPath, color: eq.color };
     });
 
-    // Intersection calculations remain active for ALL equations
     const pointsList = [];
     if (equations.length > 1) {
       for (let i = 0; i < equations.length; i++) {
@@ -497,7 +505,6 @@ export default function CalculatorApp() {
                         onChange={(e) => handleUpdateEquation(eq.id, e.target.value)}
                         placeholder="Contoh: x + 1, x^2 - 4"
                       />
-                      {/* Show/Hide Toggle Button */}
                       <button
                         className={`btn btn-sm border-0 p-1 ${eq.visible ? 'text-primary' : 'text-muted'}`}
                         onClick={() => handleToggleVisibility(eq.id)}
@@ -523,12 +530,13 @@ export default function CalculatorApp() {
               </div>
             </div>
 
-            <div className="col-md-7">
+            <div className="col-md-7 d-flex flex-column gap-2">
+              {/* Graphic SVG Canvas */}
               <div className="bg-white border rounded-3 p-2 shadow-sm text-center position-relative">
                 <svg
                   viewBox="0 0 360 300"
                   className="w-100 h-auto"
-                  style={{ maxHeight: '300px', background: '#fafafa' }}
+                  style={{ maxHeight: '260px', background: '#fafafa' }}
                 >
                   {[-8, -6, -4, -2, 2, 4, 6, 8].map((val) => {
                     const x = ((val + 10) / 20) * 360;
@@ -576,8 +584,8 @@ export default function CalculatorApp() {
                         <circle
                           cx={pt.svgX}
                           cy={pt.svgY}
-                          r={isHovered ? "6" : "4.5"}
-                          fill="#dc3545"
+                          r={isHovered ? "6.5" : "4.5"}
+                          fill={isHovered ? "#0d6efd" : "#dc3545"}
                           stroke="#ffffff"
                           strokeWidth="1.5"
                         />
@@ -635,6 +643,57 @@ export default function CalculatorApp() {
                     );
                   })}
                 </svg>
+              </div>
+
+              {/* Scrollable Dropdown List for Intersections */}
+              <div className="bg-white border rounded-3 shadow-sm overflow-hidden">
+                <button
+                  className="btn btn-light btn-sm w-100 d-flex justify-content-between align-items-center py-2 px-3 fw-bold text-dark border-0"
+                  onClick={() => setShowIntersectionList(!showIntersectionList)}
+                >
+                  <span className="d-flex align-items-center gap-2">
+                    <span className="badge bg-danger rounded-pill">
+                      {intersections.length}
+                    </span>
+                    Titik Potong (Intersections)
+                  </span>
+                  {showIntersectionList ? <Icons.ChevronUp /> : <Icons.ChevronDown />}
+                </button>
+
+                {showIntersectionList && (
+                  <div
+                    className="overflow-y-auto border-top p-2 d-flex flex-column gap-1"
+                    style={{ maxHeight: '120px' }}
+                  >
+                    {intersections.length === 0 ? (
+                      <span className="text-muted small text-center py-2 italic">
+                        Tidak ada titik potong yang terdeteksi.
+                      </span>
+                    ) : (
+                      intersections.map((pt, idx) => {
+                        const isHovered = hoveredPointId === pt.id;
+                        return (
+                          <div
+                            key={pt.id}
+                            className={`p-2 rounded-2 border transition-all cursor-pointer d-flex justify-content-between align-items-center ${
+                              isHovered ? 'bg-primary-subtle border-primary' : 'bg-light border-0'
+                            }`}
+                            onMouseEnter={() => setHoveredPointId(pt.id)}
+                            onMouseLeave={() => setHoveredPointId(null)}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <span className="fw-bold text-dark small">
+                              #{idx + 1} Point: ({pt.x.toFixed(2)}, {pt.y.toFixed(2)})
+                            </span>
+                            <div className="text-end text-muted style-italic" style={{ fontSize: '11px' }}>
+                              {pt.functions.join(' & ')}
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
